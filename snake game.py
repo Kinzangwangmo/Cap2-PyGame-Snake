@@ -11,6 +11,8 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+    #  Adding in movement keys
+    # More code here
     screen.fill(pygame.Color('blue'))      
     screen.blit(test_surface,(300, 250))        
     pygame.display.update() 
