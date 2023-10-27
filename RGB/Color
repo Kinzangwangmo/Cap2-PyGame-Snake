@@ -5,4 +5,8 @@ r     g  b
 
 Square screen color
 r     g   b
-(150,200,90)
+(200,150,90)
+
+snake(rect) screen color
+ r    g   b
+(250,150,130)
