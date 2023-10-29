@@ -26,6 +26,8 @@ class FRUIT:
         self.y = 9
         self.pos = Vector2(self.x,self.y)
  # create x and  y position 
+
+ #verified code and indentation
      
     def draw_fruit(self):
         fruit_rect = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y * cell_size),cell_size,cell_size)
