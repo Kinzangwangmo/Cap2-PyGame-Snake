@@ -7,12 +7,14 @@ class SNAKE:
         self.direction = Vector2(1,0)
         self.new_block = False
 
+        
     def draw_snake(self):
         for block in self.body:
             x_pos = int(block.x * cell_size)
             y_pos = int(block.y * cell_size)
             block_rect = pygame.Rect(x_pos,y_pos,cell_size,cell_size) 
             pygame.draw.rect(screen,(250,150,130),block_rect)
+            
         
     def move_snake(self):
         if self.new_block == True:
@@ -43,6 +45,7 @@ class FRUIT:
         fruit_rect = pygame.Rect(int(self.pos.x * cell_size),int(self.pos.y * cell_size),cell_size,cell_size)
         screen.blit(Orange,fruit_rect)
        # pygame.draw.rect(screen,(200,150,90),fruit_rect)
+    
 
     def randomize(self):
         self.x = random.randint(0,cell_number -1)
@@ -61,8 +64,10 @@ class MAIN:
         self.check_fail()  
 
     def draw_elements(self):
+        self.draw_grass()
         self.snake.draw_snake() 
         self.fruit.draw_fruit()  
+        self.draw_score()
 
     def check_collision(self):
         if self.fruit.pos == self.snake.body[0]:
@@ -83,6 +88,32 @@ class MAIN:
     def game_over(self):
         pygame.quit()
         sys.exit()
+
+    def draw_grass(self):
+        grass_color = (160,210,60)
+
+        for row in range(cell_number):
+            if row % 2 == 0:
+                for col in range(cell_number):
+                    if col % 2 == 0:
+                        grass_rect = pygame.Rect(col * cell_size,row * cell_size,cell_size,cell_size)
+                        pygame.draw.rect(screen,grass_color,grass_rect) 
+            else:
+                for col in range(cell_number):
+                    if col % 2 != 0:
+                        grass_rect = pygame.Rect(col * cell_size,row*cell_size,cell_size,cell_size)
+                        pygame.draw.rect(screen,grass_color,grass_rect)
+
+    def draw_score(self):
+        score_text =  str(len(self.snake.body) - 2)
+        score_surface = game_font.render(score_text,True,(50,70,10))
+        score_x = int(cell_size * cell_size - 50)
+        score_y = int(cell_size * cell_number -30)
+        score_rect = score_surface.get_rect(center=(score_x,score_y))
+        Orange_rect = Orange.get_rect(midright =(score_rect.left,score_rect.centery))
+
+        screen.blit(score_surface,score_rect)
+        screen.blit(Orange,Orange_rect)
               
                 
 
@@ -93,6 +124,7 @@ screen = pygame.display.set_mode((cell_size * cell_number,cell_number * cell_siz
 clock = pygame.time.Clock()
 Orange = pygame.image.load('Orange.png').convert_alpha() 
 Orange = pygame.transform.scale(Orange, (20, 20))
+game_font = pygame.font.Font('TrueType font file.ttf',10)
 
 
 
