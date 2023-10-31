@@ -3,8 +3,8 @@ from pygame.math import Vector2
 
 class SNAKE:
     def __init__(self):
-        self.body = [Vector2(4,10),Vector2(3,10),Vector2(2,10)]
-        self.direction = Vector2(1,0)
+        self.body = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
+        self.direction = Vector2(0,0)
         self.new_block = False
 
         
@@ -14,6 +14,8 @@ class SNAKE:
             y_pos = int(block.y * cell_size)
             block_rect = pygame.Rect(x_pos,y_pos,cell_size,cell_size) 
             pygame.draw.rect(screen,(250,150,130),block_rect)
+            
+            
             
         
     def move_snake(self):
@@ -29,6 +31,11 @@ class SNAKE:
 
     def add_block(self):
         self.new_block = True
+
+    def reset(self):
+        self.body = [Vector2(5,10),Vector2(4,10),Vector2(3,10)] 
+        self.direction = Vector2(0,0)   
+   
 
 
 class FRUIT:
@@ -61,7 +68,8 @@ class MAIN:
     def update(self):
         self.snake.move_snake()
         self.check_collision()
-        self.check_fail()  
+        self.check_fail()
+         
 
     def draw_elements(self):
         self.draw_grass()
@@ -73,6 +81,12 @@ class MAIN:
         if self.fruit.pos == self.snake.body[0]:
             self.fruit.randomize()
             self.snake.add_block()
+
+        for block in self.snake.body[0]:
+            if block == self.fruit.pos:
+                self.fruit.randomize()        
+            
+            
 
     def check_fail(self):
     # check if snake is outside the screen
@@ -86,8 +100,7 @@ class MAIN:
 
 
     def game_over(self):
-        pygame.quit()
-        sys.exit()
+        self.snake.reset()
 
     def draw_grass(self):
         grass_color = (160,210,60)
@@ -105,17 +118,13 @@ class MAIN:
                         pygame.draw.rect(screen,grass_color,grass_rect)
 
     def draw_score(self):
-        score_text =  str(len(self.snake.body) - 2)
-        score_surface = game_font.render(score_text,True,(50,70,10))
-        score_x = int(cell_size * cell_size - 50)
-        score_y = int(cell_size * cell_number -30)
-        score_rect = score_surface.get_rect(center=(score_x,score_y))
-        Orange_rect = Orange.get_rect(midright =(score_rect.left,score_rect.centery))
-
+        score_text = str(len(self.snake.body) - 3)
+        score_surface = game_font.render(score_text,True,(55,77,10))
+        score_x = int(cell_number * cell_size - 40)
+        score_y = int(cell_number * cell_size - 20)
+        score_rect = score_surface.get_rect(center = (score_x,score_y))
         screen.blit(score_surface,score_rect)
-        screen.blit(Orange,Orange_rect)
-              
-                
+                    
 
 pygame.init()
 cell_size = 30
@@ -124,7 +133,8 @@ screen = pygame.display.set_mode((cell_size * cell_number,cell_number * cell_siz
 clock = pygame.time.Clock()
 Orange = pygame.image.load('Orange.png').convert_alpha() 
 Orange = pygame.transform.scale(Orange, (20, 20))
-game_font = pygame.font.Font('TrueType font file.ttf',10)
+game_font = pygame.font.Font('PoetsenOne-Regular.ttf',25)
+score_font = pygame.font.Font('PoetsenOne-Regular.ttf',25)
 
 
 
@@ -158,7 +168,7 @@ while True:
     
     #changed screen color to RGB
     screen.fill((160,200,50)) 
-    main_game.draw_elements()
+    main_game.draw_elements() 
     pygame.display.update() 
     clock.tick(50)
 
