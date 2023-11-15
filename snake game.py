@@ -1,3 +1,5 @@
+# http://www.youtube.com@ClearCode
+
 import pygame,sys,random 
 from pygame.math import Vector2
 
@@ -6,6 +8,8 @@ class SNAKE:
         self.body = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
         self.direction = Vector2(0,0)
         self.new_block = False
+
+        
 
         
     def draw_snake(self):
@@ -29,8 +33,9 @@ class SNAKE:
            body_copy.insert(0,body_copy[0] + self.direction) 
            self.body = body_copy[:]
 
+
     def add_block(self):
-        self.new_block = True
+        self.new_block = True    
 
     def reset(self):
         self.body = [Vector2(5,10),Vector2(4,10),Vector2(3,10)] 
@@ -81,6 +86,7 @@ class MAIN:
         if self.fruit.pos == self.snake.body[0]:
             self.fruit.randomize()
             self.snake.add_block()
+        
 
         for block in self.snake.body[0]:
             if block == self.fruit.pos:
