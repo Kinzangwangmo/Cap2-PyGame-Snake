@@ -1,9 +1,11 @@
 import unittest
 import pygame
 
-from import SNAKE, Vector2, Fruit
+snake_game = __import__('snake_game')
+SNAKE = snake_game.SNAKE
+Vector2 = snake_game.Vector2
+Fruit = snake_game.Fruit
  
-
 #Snake movement
 class TestSnakeMovement(unittest.TestCase):
    def setUp(self):
